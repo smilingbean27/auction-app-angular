@@ -1,0 +1,19 @@
+
+<h3 class="title"> Auction List </h3>
+<div *ngIf="products.length > 0; then content; else noContent"></div>
+
+<ng-template #content>
+    <mat-list *ngFor="let product of products">
+        <mat-list-item> 
+            <app-product-list-item [product]="product"></app-product-list-item>
+        </mat-list-item>
+    </mat-list>
+</ng-template>
+
+<ng-template #noContent>
+        <div class="noContent">
+            No Product found in the auction
+        </div>          
+</ng-template>
+    
+

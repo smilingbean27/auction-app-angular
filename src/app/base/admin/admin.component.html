@@ -1,0 +1,32 @@
+<div class="form_container">
+<h2> Admin Login Form </h2>
+<form [formGroup]="loginForm">
+<mat-form-field appearance="standard">
+    <label> Email </label>
+    <input matInput type="email" placeholder="Put your email here" formControlName="email" required >
+    <mat-error *ngIf="email.hasError('required')"> Forgot to type your Email? </mat-error>
+    <mat-hint *ngIf="email.hasError('pattern')"> Invalid Email format </mat-hint>
+</mat-form-field>
+
+<mat-form-field appearance="standard">
+    <label> Password </label>
+    <input matInput type="password" placeholder="Put a strong password"  formControlName="password" required >
+    <mat-error *ngIf="password.hasError('required')"> You can't forget your password man! </mat-error>
+    
+    <mat-hint>
+        <span *ngIf="password.hasError('hasNumber')"> At least one number...  </span>
+        <span *ngIf="password.hasError('hasLowerCase')"> At least one lowercase character... </span>
+        <span *ngIf="password.hasError('hasCapitalCase')"> At least one uppercase character...  </span>
+        <span *ngIf="password.hasError('hasSpecialChar')"> At least one special character...  </span>
+        <span *ngIf="password.hasError('minlength') && !password.hasError('required')">Minimum length: {{minLength}}</span>
+        <span *ngIf="password.hasError('maxlength') && !password.hasError('required')">Maximum length: {{maxLength}}</span>
+    </mat-hint>   
+</mat-form-field>
+
+</form>
+</div>
+
+
+
+
+

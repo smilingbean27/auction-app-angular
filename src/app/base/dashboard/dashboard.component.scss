@@ -1,0 +1,24 @@
+
+.logo{
+    text-transform: uppercase;
+}
+
+.auction_container{
+    width: 40%;
+    margin: 1rem auto 5rem auto;
+    position: relative;
+}
+
+.button_auction{
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.form_auction{
+    position: absolute;
+    top: 5rem;
+    width: 100%;
+}
+

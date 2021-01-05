@@ -1,0 +1,18 @@
+<div class="item_container">
+    <div class="item_name">
+        {{product.name}}
+    </div>
+
+    <div class="item_price">
+        {{ product.price }}$
+    </div>
+
+    <div>
+        <app-timer [endDate]= "product.endDateTime" [startDate]="product.startDateTime"></app-timer>
+    </div>
+
+    <div class="item_view-details">
+        <a routerLink="/admin/auction/product/{{product.id}}" routerLinkActive="active"> View Details >>> </a>
+    </div>
+    
+</div>

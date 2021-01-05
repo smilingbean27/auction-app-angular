@@ -1,0 +1,46 @@
+<div *ngIf="product.id; then show; else pageNotFound"></div>
+
+<ng-template #show>
+    <div class="auction_container">
+        <div class="auction-form_container">
+            <form [formGroup]="auctionForm">
+                <mat-form-field appearance="standard">
+                    <label> Name of the product </label>
+                    <input matInput type="text" formControlName="name" srequired >
+                </mat-form-field>
+        
+                <mat-form-field appearance="standard">
+                    <label> Link of Image </label>
+                    <input matInput type="text" formControlName="image" required >
+                </mat-form-field>
+                
+                <mat-form-field appearance="standard">
+                    <label> Starting bidding price (in $) </label>
+                    <input matInput type="number" formControlName="price" required >  
+                </mat-form-field>
+        
+                <div class="feature_group" formArrayName="features">
+                    <button mat-raised-button color="warn" (click)="addFeature()"> Add feature </button>
+                    <div *ngFor="let feature of features.controls; let i = index;">
+                        <input matInput formControlName="{{i}}">         
+                    </div>
+                </div>
+        
+                <a class="start" mat-raised-button (click)="submitForm()">
+                    Save
+                </a>
+                
+            </form>
+        </div>
+        
+    </div>
+</ng-template>
+
+<ng-template #pageNotFound>
+    <app-page-not-found></app-page-not-found>
+</ng-template>
+
+
+
+
+

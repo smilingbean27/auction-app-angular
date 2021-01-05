@@ -1,0 +1,41 @@
+.auction-form_container{
+    margin: 2rem auto;
+    width: 40%;
+    background-color: #ccc;
+    padding: .5rem 3rem;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0,.1);
+}
+
+.form_container > h2 {
+    text-transform: uppercase;
+    text-align: center;
+    color: #222;
+}
+
+.form > * {
+    width: 100%;
+    display: block;
+}
+
+.form > mat-form-field > * {
+    width: 100%;
+}
+
+.mat-input-element {
+    background-color: #fff;
+    padding: .5rem .8rem;
+    margin-top: .5rem;
+}
+
+.mat-form-field{
+    display: block;
+}
+
+.mat-raised-button.start{
+    border-radius: 2rem;
+    margin: 1rem 0 2rem 0;
+}
+
+.feature_group{
+    margin: .5rem 0;
+}

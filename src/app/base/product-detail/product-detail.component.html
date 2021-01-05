@@ -1,0 +1,48 @@
+<div *ngIf="product.name; then showTemplate; else noContent">
+    
+</div>
+
+<ng-template class="container" #noContent >
+    <app-page-not-found></app-page-not-found>
+</ng-template>
+
+<ng-template #showTemplate>
+        <mat-card>
+            <mat-card-title> Product in Auction </mat-card-title>
+            <div class="content_container">
+                <img mat-card-image src={{product.image}}>
+                <mat-card-content>
+                    <table>
+                        <tr>
+                            <th>Name: </th>
+                            <td> {{product.name}}</td>
+                        </tr>
+                        <tr>
+                            <th> Price: </th>
+                            <td> {{product.price}}$</td>
+                        </tr>
+                        <tr *ngIf="product.features.length > 0">
+                            <th> Features: </th>
+                            <td>
+                                <div *ngFor="let feature of product.features; let i = index">
+                                    <span *ngIf="feature"> {{i+1}}. {{feature}}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Status: </th>
+                            <td>
+                                <app-timer [endDate]="product.endDateTime" [startDate]="product.startDateTime"></app-timer>
+                            </td>
+                        </tr>
+                        
+                    </table>
+    
+                    <button class="delete" mat-raised-button color="warn" (click)="delete()"> Delete </button>
+                    <button class="edit" mat-raised-button color="primary" (click)="edit()"> Edit </button>
+    
+                </mat-card-content>
+            </div>
+            
+        </mat-card>
+</ng-template>

@@ -1,0 +1,32 @@
+
+.title {
+    text-decoration: underline;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.container > mat-toolbar {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.logo{
+    text-transform: uppercase;
+}
+
+.button_signout{
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+}
+
+app-product-list-item {
+    display: inline-block;
+    width: 100%;
+}
+
+.noContent{
+    text-align: center;
+    color: rgba(0, 0, 0, .3);
+    font-size: 2rem;
+}

@@ -1,0 +1,16 @@
+.item{
+    &_container{
+        width: 80%;
+        margin: 0 auto;
+        background-color: #999;
+        padding: .5rem 0;
+        display: flex;
+        justify-content: space-between;
+        color: white;
+    }
+
+    &_container > *{
+        flex: 0 0 25%;
+        text-align: center;
+    }
+}

@@ -1,0 +1,30 @@
+
+.container > mat-toolbar {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.content_container{
+    margin: 3rem 0;
+    display: flex;
+}
+
+.mat-card-image{
+    flex: 0 0 30%;
+    width: 20rem;
+    height: 20rem;
+    margin: 0;
+}
+.mat-card-content{
+    padding: 0 4rem;
+}
+
+.mat-card-content > table > tr  > td, th {
+    padding: .5rem .3rem;
+    font-size: 1.2rem;
+}
+
+.mat-raised-button.delete, .mat-raised-button.edit{
+    margin: 3rem .2rem;
+}
+
