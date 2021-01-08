@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminDataService } from 'src/app/_services/admin-data.service';
-import { Observable, of, Subject } from 'rxjs';
-import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { startWith } from 'rxjs/operators';
+import { UserDataService } from 'src/app/_services/user-data.service';
+
 
 @Component({
   selector: 'app-header',
@@ -11,22 +10,38 @@ import { startWith } from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  authenticated = false;
+  users = {
+    user: {
+      authenticated: false
+    },
+    admin:{
+      authenticated: false
+    }
+  }
 
   constructor(public adminService: AdminDataService, private route: Router) {
-    this.authenticated = this.adminService.isAuthenticated();
-    console.log(this.authenticated)
+    
   }
 
   ngOnInit(): void {
-   this.adminService.authenticated$.subscribe(
-     auth => this.authenticated = auth
+   this.adminService.adminIsAuthenticated$.subscribe(
+     auth => this.users.admin.authenticated = auth
    )
+   this.adminService.userIsAuthenticated$.subscribe(
+    auth => this.users.user.authenticated = auth
+  )
   }
 
   signOut(){
-    this.adminService.setAuthentication(false);
-    this.route.navigate(['/admin/sign-in'])
+    if (this.users.admin.authenticated){
+      this.adminService.setAuthentication(false, 'admin');
+      this.route.navigate(['/admin/sign-in'])
+    }
+    if (this.users.user.authenticated){
+      this.adminService.setAuthentication(false, 'user');
+      this.route.navigate(['/sign-in'])
+    }
+    
   }
 
 }

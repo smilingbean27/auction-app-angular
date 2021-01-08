@@ -1,10 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { startWith } from 'rxjs/operators'
 import { User } from '../base/user';
-import { users }from '../_data/user-data';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +10,25 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class AdminDataService {
 
-  users: User[] = users;
-  authenticated$ = new Subject<boolean>();
-
+  adminIsAuthenticated$ = new Subject<boolean>();
+  userIsAuthenticated$ = new Subject<boolean>();
+  
   constructor(private http: HttpClient){
     localStorage.setItem('authenticated', String(false));
-    this.authenticated$.subscribe(val =>{
-      console.log('From user Service subscribtion',val);
+    this.adminIsAuthenticated$.subscribe(val =>{
+      console.log('From Admin Service subscribtion',val);
       localStorage.setItem('authenticated', String(val))
     } );
   }
 
-  isAuthenticated(){
-    console.log(localStorage.getItem('authenticated'))
-    return localStorage.getItem('authenticated') === 'true' ? true: false;
-  }
+  // isAuthenticated(){
+  //   console.log(localStorage.getItem('authenticated'))
+  //   return localStorage.getItem('authenticated') === 'true' ? true: false;
+  // }
 
-  setAuthentication(val: boolean){
-    this.authenticated$.next(val);
+  setAuthentication(val: boolean, user: String){
+    if (user === 'admin') this.adminIsAuthenticated$.next(val);
+    else if (user === 'user') this.userIsAuthenticated$.next(val);
   }
 
   
@@ -39,11 +38,11 @@ export class AdminDataService {
     })
   }
 
-  verifyUser(user: User): void {
-    this.http.post<User>('/api/authenticate', user)
-    .subscribe(data =>{
-      if (data.email) this.authenticated$.next(true)
-      else this.authenticated$.next(false)
+  verifyUser(admin: User, adminRoute: boolean): void {
+    this.http.post<any>('/api/authenticate', {...admin, adminRoute}, {...this.httpOptions, params: new HttpParams().set('adminRoute', String(adminRoute))})
+    .subscribe(user =>{
+      if (user && user.isAdmin) this.adminIsAuthenticated$.next(true)
+      if (user && !user.isAdmin) this.userIsAuthenticated$.next(true)
     } ); 
   }
 

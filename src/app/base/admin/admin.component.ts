@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { User } from '../user';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { debounceTime, switchMap, distinct, distinctUntilChanged } from 'rxjs/operators';
 import { AdminDataService } from '../../_services/admin-data.service';
@@ -14,17 +14,23 @@ import { CustomPasswordValidator } from '../../_validators/customPasswordValidat
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private route: Router, private adminService: AdminDataService) { 
-    this.adminService.authenticated$.subscribe(
+  constructor(private router: Router, private adminService: AdminDataService, private route: ActivatedRoute) { 
+    this.adminService.adminIsAuthenticated$.subscribe(
       authStatus => {
         if (authStatus){
-          this.route.navigate(['/admin/dashboard'])
+          this.router.navigate(['/admin/dashboard'])
         }
+      }
+    )
+
+    this.adminService.userIsAuthenticated$.subscribe(
+      auth2 => {
+        if(auth2) this.router.navigate(['/dashboard'])
       }
     )
   }
 
-  searchedUser$: Observable<User> = of({email: '', password: ''});
+  searchedUser$: Observable<User> = of({} as User);
   minLength: number = 6;
   maxLength: number = 12;
   verified: boolean = false;
@@ -77,8 +83,15 @@ export class AdminComponent implements OnInit {
       })
     )
     this.searchedUser$.subscribe(user => {
-      this.adminService.verifyUser(user);
+      const path = this.route.snapshot.routeConfig?.path;
+      let adminRoute = false
+      if (path == 'admin/sign-in') adminRoute = true
+      console.log(path)
+      this.adminService.verifyUser(user, adminRoute);
     });
+
+    const path = this.route.snapshot.routeConfig?.path;
+    console.log(path)
   }
 
   

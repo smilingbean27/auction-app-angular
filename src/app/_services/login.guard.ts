@@ -4,18 +4,30 @@ import { AdminDataService } from "./admin-data.service";
 
 @Injectable()
 export class LoginGuard implements CanActivate{
-    loggedIn: boolean = false;
+
+    adminIsLoggedIn = false;
+    userIsLoggedIn = false;
+
     constructor(private adminService: AdminDataService, private route: Router){
-        this.adminService.authenticated$.subscribe(
-            authStatus => this.loggedIn = authStatus)
+        this.adminService.adminIsAuthenticated$.subscribe(
+            auth1 => this.adminIsLoggedIn = auth1)
+        
+        this.adminService.userIsAuthenticated$.subscribe(
+            auth2 => this.userIsLoggedIn = auth2
+        )
     }
 
     canActivate(): boolean {
-        if (!this.loggedIn){
-            this.route.navigate(['/admin/sign-in']);
+        if (!this.adminIsLoggedIn){
+
+            if(!this.userIsLoggedIn){
+                this.route.navigate(['/admin/sign-in']);
+            }
+
+            
         }
 
-        return this.loggedIn;
+        return this.adminIsLoggedIn || this.userIsLoggedIn;
     }
     
 }

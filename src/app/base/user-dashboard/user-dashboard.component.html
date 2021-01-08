@@ -1,0 +1,58 @@
+<form [formGroup] = "date" >
+    <mat-form-field appearance="fill">
+        <mat-label>From </mat-label>
+        <input matInput [matDatepicker]="picker1" formControlName ="startDate" autocomplete="off">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label> To </mat-label>
+        <input matInput [matDatepicker]="picker2" formControlName ="endDate" autocomplete="off">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+</form>
+
+
+<mat-checkbox (change)="onCheck($event)"> Show all </mat-checkbox>
+
+<div *ngIf ="showProducts.length > 0; then showCard; else noProduct">
+
+</div>
+<ng-template #showCard>
+    <div class="container">
+        <div class="card_container" >
+            <div *ngFor="let product of showProducts; let i= index;" class="card_container-item" >
+                <mat-card >
+                    <mat-card-title> {{product.name}} </mat-card-title>
+                    <mat-card-content>
+                        <ul class="card_list">
+                            <li class="card_list-item">{{product.price}}$</li>
+                            <li class="card_list-item">{{product.id}}</li>
+                            <li class="card_list-item">
+                                <app-timer [endDate]="product.endDateTime" [startDate]="product.startDateTime"></app-timer>
+                            </li>
+
+                            <li class="card_list-item red" *ngIf="product.isInCountry !== country">
+                                Blocked in Your country
+                            </li>
+                            
+                        </ul>
+                    </mat-card-content>
+    
+                    <mat-card-footer>
+                        <button mat-raised-button color="basic" [disabled]="!product.entry" > Enter </button>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+        </div>     
+    </div>
+</ng-template>
+    
+
+<ng-template #noProduct>
+    <div class="container">
+        <h2 style="text-align: center;"> No auctions are live  </h2>
+    </div>     
+</ng-template>

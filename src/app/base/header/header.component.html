@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
     <span class="logo"> Hit the hammer</span>
-    <ul class="navigation">
+    <!-- <ul class="navigation">
         <li class="navigation_item"> <a href="/admin/auction/list" class="navigation_link"> Auction list </a> </li>
-    </ul>
-    <button *ngIf="authenticated" mat-raised-button color="accent" class="button_signout" (click)="signOut()"> Sign Out </button>
+    </ul> -->
+    <button *ngIf="users.user.authenticated || users.admin.authenticated" mat-raised-button color="accent" class="button_signout" (click)="signOut()"> Sign Out </button>
 </mat-toolbar>
 

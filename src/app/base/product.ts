@@ -5,7 +5,8 @@ export interface Product {
     price: number;
     features: Array<string>;
     startDateTime: Date;
-    blockInCountry: string;
+    isInCountry: string;
     endDateTime: Date;
     timePeriod: number;
+    entry: boolean;
 }

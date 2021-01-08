@@ -10,6 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule} from '@angular/material/list';
 import { MatCardModule} from '@angular/material/card';
 import { MatSelectModule} from '@angular/material/select';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule} from '@angular/material/core';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +29,9 @@ import { PageNotFoundComponent } from './base/page-not-found/page-not-found.comp
 import { HeaderComponent } from './base/header/header.component';
 import { TimerComponent } from './base/timer/timer.component';
 import { EditProductComponent } from './base/product-detail/edit-product/edit-product.component';
+import { UserDashboardComponent } from './base/user-dashboard/user-dashboard.component';
+import { UserDataService } from './_services/user-data.service';
+import { IpService } from './_services/ip.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +47,7 @@ import { EditProductComponent } from './base/product-detail/edit-product/edit-pr
     HeaderComponent,
     TimerComponent,
     EditProductComponent,
+    UserDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,9 +62,12 @@ import { EditProductComponent } from './base/product-detail/edit-product/edit-pr
     MatListModule,
     MatCardModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
-  providers: [AdminDataService, LoginGuard],
+  providers: [AdminDataService, LoginGuard, UserDataService, IpService ],
   bootstrap: [AppComponent],
 
 })
