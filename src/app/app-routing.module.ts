@@ -15,16 +15,16 @@ const routes: Routes = [
 
   { path: 'admin/sign-in', component: AdminComponent},
   { path: '', redirectTo: '/admin/sign-in', pathMatch: 'full'},
-  // { path: 'dashboard', component: DashboardComponent, canActivate: [LoginGuard]},
-  { path: 'admin/auction/add', component: AuctionFormComponent},
-  { path: 'admin/auction/list', component: ProductsListComponent},
-  { path: 'admin/auction/product/:id', component: ProductDetailComponent},
-  { path: 'admin/auction/product/:id/edit', component: EditProductComponent},
-  { path: 'admin/dashboard', component: DashboardComponent},
+  // { path: 'dashboard', component: DashboardComponent,},
+  { path: 'admin/auction/add', component: AuctionFormComponent, canActivate: [LoginGuard]},
+  { path: 'admin/auction/list', component: ProductsListComponent, canActivate: [LoginGuard]},
+  { path: 'admin/auction/product/:id', component: ProductDetailComponent, canActivate: [LoginGuard]},
+  { path: 'admin/auction/product/:id/edit', component: EditProductComponent, canActivate: [LoginGuard]},
+  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [LoginGuard]},
 
   // User side Components 
   { path: 'sign-in', component: AdminComponent},
-  { path: 'dashboard', component: UserDashboardComponent},
+  { path: 'dashboard', component: UserDashboardComponent, canActivate: [LoginGuard]},
   { path: '**', component: PageNotFoundComponent}
 ];
 

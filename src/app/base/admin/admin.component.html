@@ -1,5 +1,5 @@
 <div class="form_container">
-<h2> Admin Login Form </h2>
+<h2> {{adminRoute ? 'Admin': 'User'}} Login Form </h2>
 <form [formGroup]="loginForm">
 <mat-form-field appearance="standard">
     <label> Email </label>
@@ -23,6 +23,16 @@
     </mat-hint>   
 </mat-form-field>
 
+<div *ngIf="adminRoute; then UserLoginLink; else AdminLoginLink">
+
+</div>
+<ng-template #UserLoginLink>
+    <a href="/sign-in"> Are you a user?</a>
+</ng-template>
+
+<ng-template #AdminLoginLink>
+    <a href="/admin/sign-in"> Are you an admin? </a>
+</ng-template>
 </form>
 </div>
 

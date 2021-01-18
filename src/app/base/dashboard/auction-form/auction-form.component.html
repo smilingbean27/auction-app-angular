@@ -31,8 +31,8 @@
         </mat-form-field>
 
         <mat-form-field appearance="standard">
-            <label> Block Access in Country </label>
-            <mat-select formControlName="blockInCountry">
+            <label> Auction is for Country </label>
+            <mat-select formControlName="isInCountry">
                 <mat-option *ngFor="let country of countries" [value]="country.key" >
                     {{country.value}}
                 </mat-option>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <a class="start" mat-raised-button [disabled]="!name.value || !image.value || !price.value || !startDateTime.value || !endDateTime.value" (click)="submitForm()">
+        <a class="start" mat-raised-button [disabled]="!name.value || !image.value || !price.value || !startDateTime.value || !endDateTime.value || !isInCountry.value" (click)="submitForm()">
             Add to Auction 
         </a>
         

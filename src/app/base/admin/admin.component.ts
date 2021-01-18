@@ -14,6 +14,8 @@ import { CustomPasswordValidator } from '../../_validators/customPasswordValidat
 })
 export class AdminComponent implements OnInit {
 
+  adminRoute = false;
+
   constructor(private router: Router, private adminService: AdminDataService, private route: ActivatedRoute) { 
     this.adminService.adminIsAuthenticated$.subscribe(
       authStatus => {
@@ -82,16 +84,14 @@ export class AdminComponent implements OnInit {
         return of(user);
       })
     )
+
     this.searchedUser$.subscribe(user => {
-      const path = this.route.snapshot.routeConfig?.path;
-      let adminRoute = false
-      if (path == 'admin/sign-in') adminRoute = true
-      console.log(path)
-      this.adminService.verifyUser(user, adminRoute);
+      
+      this.adminService.verifyUser(user, this.adminRoute);
     });
 
     const path = this.route.snapshot.routeConfig?.path;
-    console.log(path)
+    if (path == 'admin/sign-in') this.adminRoute = true
   }
 
   

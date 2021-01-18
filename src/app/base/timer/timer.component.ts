@@ -18,12 +18,11 @@ export class TimerComponent implements OnInit {
 
   ngOnInit(): void {
     const startTime = new Date(this.startDate).getTime();
-    const endTime = new Date(this.endDate).getTime()
+    const endTime = new Date(this.endDate).getTime();
 
     const x = setInterval(
       () => {
         const now = new Date().getTime();
-
         if (startTime - now > 0){
             const distance = startTime - now;
             this.hours = Math.floor(distance/(60*60*1000));

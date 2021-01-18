@@ -37,6 +37,13 @@ export class EditProductComponent implements OnInit {
     price: new FormControl('', [
       Validators.required,
     ]),
+    startDateTime: new FormControl('',[
+      Validators.required
+    ]),
+    endDateTime: new FormControl('', [
+      Validators.required
+    ]),
+    isInCountry: new FormControl(''),
     features: new FormArray([
       new FormControl(''),
       new FormControl(''),
@@ -56,10 +63,6 @@ export class EditProductComponent implements OnInit {
     return this.auctionForm.get('price') as FormControl;
   }
 
-  get timePeriod(){
-    return this.auctionForm.get('timePeriod') as FormControl;
-  }
-
   get features(){
     return this.auctionForm.get('features') as FormArray;
   }
@@ -75,11 +78,12 @@ export class EditProductComponent implements OnInit {
       image: product.image,
       startDateTime: product.startDateTime,
       endDateTime: product.endDateTime,
-      features: [...this.product.features]
+      isInCountry: product.isInCountry,
+      features: [...this.product.features],
     })
   }
 
-  submitForm(){
+  saveForm(){
     const product = {...this.auctionForm.value, id: this.product.id}
     console.log(product);
     this.auctionService.editProduct(product);

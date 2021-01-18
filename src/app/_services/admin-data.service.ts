@@ -19,6 +19,9 @@ export class AdminDataService {
       console.log('From Admin Service subscribtion',val);
       localStorage.setItem('authenticated', String(val))
     } );
+    this.userIsAuthenticated$.subscribe(val => {
+      localStorage.setItem('userAuthenticated', String(val));
+    })
   }
 
   // isAuthenticated(){
@@ -39,7 +42,7 @@ export class AdminDataService {
   }
 
   verifyUser(admin: User, adminRoute: boolean): void {
-    this.http.post<any>('/api/authenticate', {...admin, adminRoute}, {...this.httpOptions, params: new HttpParams().set('adminRoute', String(adminRoute))})
+    this.http.post<any>('/api/authenticate', {...admin, adminRoute})
     .subscribe(user =>{
       if (user && user.isAdmin) this.adminIsAuthenticated$.next(true)
       if (user && !user.isAdmin) this.userIsAuthenticated$.next(true)

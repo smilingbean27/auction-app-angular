@@ -27,17 +27,19 @@ export class AuctionFormComponent implements OnInit {
     endDateTime: new FormControl('', [
       Validators.required,
     ]),
-    blockInCountry: new FormControl(''),
+    isInCountry: new FormControl(''),
     features: new FormArray([
       new FormControl('')
     ])
   })
 
   countries = [
-    {key: 'aus', value: 'Australia'},
-    {key: 'eng', value: 'England'},
-    {key: 'chi', value: 'China'},
-    {key: 'rus', value: 'Russia'}
+    {key: 'AUS', value: 'Australia'},
+    {key: 'GB', value: 'England'},
+    {key: 'CN', value: 'China'},
+    {key: 'RU', value: 'Russia'},
+    {key: 'IN', value: 'India'},
+
   ]
   
   constructor(private auctionService: AuctionService, private route: Router) { }
@@ -66,8 +68,8 @@ export class AuctionFormComponent implements OnInit {
     return this.auctionForm.get('endDateTime') as FormControl;
   }
 
-  get blockInCountry(){
-    return this.auctionForm.get('blockInCountry') as FormControl;
+  get isInCountry(){
+    return this.auctionForm.get('isInCountry') as FormControl;
   }
 
   get features(){

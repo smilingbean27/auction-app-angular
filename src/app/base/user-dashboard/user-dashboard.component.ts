@@ -16,7 +16,7 @@ const Moment = momentRange.extendMoment(moment);
 export class UserDashboardComponent implements OnInit {
 
   date = new FormGroup({
-    startDate: new FormControl(),
+    startDate: new FormControl(''),
     endDate : new FormControl('')
   })
   now: Date = moment().toDate();
@@ -30,13 +30,13 @@ export class UserDashboardComponent implements OnInit {
 
   constructor(private auctionService: AuctionService, private ipService: IpService) { 
     this.date.patchValue({
-      startDate: moment().toDate()
+      startDate: moment().toDate(),
+      endDate: moment().toDate()
     })
     this.auctionService.getProducts().subscribe(
       products => {
         this.products = products;
         this.filterProducts(this.date.value);
-        console.log(this.date.value)
       }
     )
 
@@ -53,6 +53,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filterProducts(this.date.value)
     this.date.valueChanges.subscribe(
       val => this.filterProducts(val)
     )
@@ -72,15 +73,19 @@ export class UserDashboardComponent implements OnInit {
       const s = moment(date.startDate).startOf('day');
       const e = moment(date.endDate).endOf('day');
       const range = Moment.range(s, e);
+      console.log(e.diff(s, 'seconds'));
     
       if (e.diff(s, 'seconds') > 0){
         this.filteredProducts = this.products.filter(product => {
           const r = Moment.range(product.startDateTime, product.endDateTime);
-          return (range.contains(moment(product.endDateTime)) || range.contains(moment(product.startDateTime)) || r.contains(range)) && this.IsAllowedIn(product.isInCountry);
-          
+          const bool = (range.contains(moment(product.endDateTime)) || range.contains(moment(product.startDateTime)) || r.contains(range)) && this.IsAllowedIn(product.isInCountry);
+          console.log(bool)
+          return bool;
         })
       
         this.showProducts = this.showAll ? this.products : this.filteredProducts
+        console.log('Filtered', this.filteredProducts);
+        console.log(this.showProducts);
       }
       else this.showProducts = []
     }
