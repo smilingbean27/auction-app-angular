@@ -47,3 +47,4 @@ Thumbs.db
 
 # Personal Secure files
 /src/app/_data
+.firebase/

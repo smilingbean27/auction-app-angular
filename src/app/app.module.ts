@@ -32,6 +32,7 @@ import { EditProductComponent } from './base/product-detail/edit-product/edit-pr
 import { UserDashboardComponent } from './base/user-dashboard/user-dashboard.component';
 import { UserDataService } from './_services/user-data.service';
 import { IpService } from './_services/ip.service';
+import { SignUpComponent } from './base/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { IpService } from './_services/ip.service';
     TimerComponent,
     EditProductComponent,
     UserDashboardComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

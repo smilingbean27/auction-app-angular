@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { User } from '../base/user';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
+const {baseUrl} = environment;
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +45,7 @@ export class AdminDataService {
   }
 
   verifyUser(admin: User, adminRoute: boolean): void {
-    this.http.post<any>('/api/authenticate', {...admin, adminRoute})
+    this.http.post<any>(`${baseUrl}/api/authenticate`, {...admin, adminRoute})
     .subscribe(user =>{
       if (user && user.isAdmin) this.adminIsAuthenticated$.next(true)
       if (user && !user.isAdmin) this.userIsAuthenticated$.next(true)

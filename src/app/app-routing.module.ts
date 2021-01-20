@@ -9,6 +9,7 @@ import { EditProductComponent } from './base/product-detail/edit-product/edit-pr
 import { PageNotFoundComponent } from './base/page-not-found/page-not-found.component';
 import { AuctionFormComponent } from './base/dashboard/auction-form/auction-form.component';
 import { UserDashboardComponent } from './base/user-dashboard/user-dashboard.component';
+import { SignUpComponent } from './base/sign-up/sign-up.component';
 
 const routes: Routes = [
   // Admin side components 
@@ -17,12 +18,13 @@ const routes: Routes = [
   { path: '', redirectTo: '/admin/sign-in', pathMatch: 'full'},
   // { path: 'dashboard', component: DashboardComponent,},
   { path: 'admin/auction/add', component: AuctionFormComponent, canActivate: [LoginGuard]},
-  { path: 'admin/auction/list', component: ProductsListComponent, canActivate: [LoginGuard]},
-  { path: 'admin/auction/product/:id', component: ProductDetailComponent, canActivate: [LoginGuard]},
-  { path: 'admin/auction/product/:id/edit', component: EditProductComponent, canActivate: [LoginGuard]},
-  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [LoginGuard]},
+  { path: 'admin/auction/list', component: ProductsListComponent },
+  { path: 'admin/auction/product/:id', component: ProductDetailComponent },
+  { path: 'admin/auction/product/:id/edit', component: EditProductComponent},
+  { path: 'admin/dashboard', component: DashboardComponent},
 
   // User side Components 
+  { path:'sign-up', component: SignUpComponent},
   { path: 'sign-in', component: AdminComponent},
   { path: 'dashboard', component: UserDashboardComponent, canActivate: [LoginGuard]},
   { path: '**', component: PageNotFoundComponent}

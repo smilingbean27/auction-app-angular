@@ -57,7 +57,7 @@ export class AdminComponent implements OnInit {
         CustomPasswordValidator(/\d/, {hasNumber: true}),
         CustomPasswordValidator(/[A-Z]/, {hasCapitalCase: true}),
         CustomPasswordValidator(/[a-z]/, {hasLowerCase: true}),
-        CustomPasswordValidator(/[!@#$%^&*(),.?":{}|<>]/g,{hasSpecialChar: true})
+        CustomPasswordValidator(/[!@#$%^&*(),.?":{}|<>]/,{hasSpecialChar: true})
       ])
   }
   )
