@@ -10,23 +10,27 @@ import { PageNotFoundComponent } from './base/page-not-found/page-not-found.comp
 import { AuctionFormComponent } from './base/dashboard/auction-form/auction-form.component';
 import { UserDashboardComponent } from './base/user-dashboard/user-dashboard.component';
 import { SignUpComponent } from './base/sign-up/sign-up.component';
+import { UserLoginGuard } from './_services/user-login.guard';
 
 const routes: Routes = [
   // Admin side components 
-
+  { path: 'admin', canActivate: [LoginGuard], 
+  children: [
+      { path: 'auction/add', component: AuctionFormComponent},
+      { path: 'auction/list', component: ProductsListComponent},
+      { path: 'auction/product/:id', component: ProductDetailComponent },
+      { path: 'auction/product/:id/edit', component: EditProductComponent},
+      { path: 'dashboard', component: DashboardComponent},
+    ] 
+  },
+  { path: '', canActivate: [UserLoginGuard],
+    children: [
+      { path: 'dashboard', component: UserDashboardComponent,},
+    ]
+  },
   { path: 'admin/sign-in', component: AdminComponent},
-  { path: '', redirectTo: '/admin/sign-in', pathMatch: 'full'},
-  // { path: 'dashboard', component: DashboardComponent,},
-  { path: 'admin/auction/add', component: AuctionFormComponent, canActivate: [LoginGuard]},
-  { path: 'admin/auction/list', component: ProductsListComponent },
-  { path: 'admin/auction/product/:id', component: ProductDetailComponent },
-  { path: 'admin/auction/product/:id/edit', component: EditProductComponent},
-  { path: 'admin/dashboard', component: DashboardComponent},
-
-  // User side Components 
   { path:'sign-up', component: SignUpComponent},
   { path: 'sign-in', component: AdminComponent},
-  { path: 'dashboard', component: UserDashboardComponent, canActivate: [LoginGuard]},
   { path: '**', component: PageNotFoundComponent}
 ];
 
