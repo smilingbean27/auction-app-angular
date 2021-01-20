@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {key} from './IP_API_key'
 
 interface IP{
   ip: String;
@@ -23,6 +24,6 @@ export class IpService {
       obj => ip = obj.ip 
     )
 
-   return this.http.get<any>(`https://geo.ipify.org/api/v1?apiKey=at_ui1cY2N5E7edG8vHwR77v04tKDD17&ipAddress=${ip}`)
+   return this.http.get<any>(`https://geo.ipify.org/api/v1?apiKey=${key}&ipAddress=${ip}`)
   }
 }

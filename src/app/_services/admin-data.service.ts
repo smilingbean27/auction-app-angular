@@ -19,18 +19,12 @@ export class AdminDataService {
   constructor(private http: HttpClient){
     localStorage.setItem('authenticated', String(false));
     this.adminIsAuthenticated$.subscribe(val =>{
-      console.log('From Admin Service subscribtion',val);
       localStorage.setItem('authenticated', String(val))
     } );
     this.userIsAuthenticated$.subscribe(val => {
       localStorage.setItem('userAuthenticated', String(val));
     })
   }
-
-  // isAuthenticated(){
-  //   console.log(localStorage.getItem('authenticated'))
-  //   return localStorage.getItem('authenticated') === 'true' ? true: false;
-  // }
 
   setAuthentication(val: boolean, user: String){
     if (user === 'admin') this.adminIsAuthenticated$.next(val);

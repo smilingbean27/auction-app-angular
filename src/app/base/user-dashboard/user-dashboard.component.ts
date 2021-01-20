@@ -42,8 +42,7 @@ export class UserDashboardComponent implements OnInit {
 
     this.ipService.getLocationData().subscribe(
       data => {
-        this.country = data.location.country
-        console.log(this.country)
+        this.country = data.location.country;
       }
     )
 
@@ -69,23 +68,18 @@ export class UserDashboardComponent implements OnInit {
 
   filterProducts(date: any){
     if (date.startDate && date.endDate){
-      console.log('Filtering....')
       const s = moment(date.startDate).startOf('day');
       const e = moment(date.endDate).endOf('day');
       const range = Moment.range(s, e);
-      console.log(e.diff(s, 'seconds'));
     
       if (e.diff(s, 'seconds') > 0){
         this.filteredProducts = this.products.filter(product => {
           const r = Moment.range(product.startDateTime, product.endDateTime);
           const bool = (range.contains(moment(product.endDateTime)) || range.contains(moment(product.startDateTime)) || r.contains(range)) && this.IsAllowedIn(product.isInCountry);
-          console.log(bool)
           return bool;
         })
       
-        this.showProducts = this.showAll ? this.products : this.filteredProducts
-        console.log('Filtered', this.filteredProducts);
-        console.log(this.showProducts);
+        this.showProducts = this.showAll ? this.products : this.filteredProducts;
       }
       else this.showProducts = []
     }

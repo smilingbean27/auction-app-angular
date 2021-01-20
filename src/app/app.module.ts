@@ -30,7 +30,6 @@ import { HeaderComponent } from './base/header/header.component';
 import { TimerComponent } from './base/timer/timer.component';
 import { EditProductComponent } from './base/product-detail/edit-product/edit-product.component';
 import { UserDashboardComponent } from './base/user-dashboard/user-dashboard.component';
-import { UserDataService } from './_services/user-data.service';
 import { IpService } from './_services/ip.service';
 import { SignUpComponent } from './base/sign-up/sign-up.component';
 import { UserLoginGuard } from './_services/user-login.guard';
@@ -70,7 +69,7 @@ import { UserLoginGuard } from './_services/user-login.guard';
     MatNativeDateModule,
     MatCheckboxModule
   ],
-  providers: [AdminDataService, LoginGuard, UserDataService, IpService, UserLoginGuard ],
+  providers: [AdminDataService, LoginGuard, IpService, UserLoginGuard ],
   bootstrap: [AppComponent],
 
 })

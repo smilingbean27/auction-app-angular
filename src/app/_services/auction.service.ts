@@ -22,7 +22,6 @@ export class AuctionService {
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]>{
-    console.log('Getting products')
     return this.http.get<Product[]>(`${baseUrl}/api/products`)
   }
 
@@ -36,7 +35,6 @@ export class AuctionService {
   }
 
   removeProduct(product: Product){
-    console.log(product.id)
     this.http.delete<void>(`${baseUrl}/api/product/${product.id}`, this.httpOptions)
     .pipe(
       catchError(err=> {

@@ -48,3 +48,4 @@ Thumbs.db
 # Personal Secure files
 /src/app/_data
 .firebase/
+src/app/_services/IP_API_key.ts
