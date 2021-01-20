@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { User } from '../base/user';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { startWith } from 'rxjs/operators';
 
 const {baseUrl} = environment;
 
@@ -17,13 +18,20 @@ export class AdminDataService {
   userIsAuthenticated$ = new Subject<boolean>();
   
   constructor(private http: HttpClient){
-    localStorage.setItem('authenticated', String(false));
-    this.adminIsAuthenticated$.subscribe(val =>{
-      localStorage.setItem('authenticated', String(val))
-    } );
-    this.userIsAuthenticated$.subscribe(val => {
-      localStorage.setItem('userAuthenticated', String(val));
-    })
+    this.adminIsAuthenticated$.pipe(
+      startWith(false)
+    )
+    this.userIsAuthenticated$.pipe(
+      startWith(false)
+    )
+    // localStorage.setItem('authenticated', String(false));
+    // localStorage.setItem('userAuthe')
+    // this.adminIsAuthenticated$.subscribe(val =>{
+    //   localStorage.setItem('authenticated', String(val))
+    // } );
+    // this.userIsAuthenticated$.subscribe(val => {
+    //   localStorage.setItem('userAuthenticated', String(val));
+    // })
   }
 
   setAuthentication(val: boolean, user: String){
@@ -40,7 +48,7 @@ export class AdminDataService {
 
   verifyUser(admin: User, adminRoute: boolean): void {
     this.http.post<any>(`${baseUrl}/api/authenticate`, {...admin, adminRoute})
-    .subscribe(user =>{
+    .subscribe(({user, info}) =>{
       if (user && user.isAdmin) this.adminIsAuthenticated$.next(true)
       if (user && !user.isAdmin) this.userIsAuthenticated$.next(true)
     } ); 

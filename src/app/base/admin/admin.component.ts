@@ -17,19 +17,7 @@ export class AdminComponent implements OnInit {
   adminRoute = false;
 
   constructor(private router: Router, private adminService: AdminDataService, private route: ActivatedRoute) { 
-    this.adminService.adminIsAuthenticated$.subscribe(
-      authStatus => {
-        if (authStatus){
-          this.router.navigate(['/admin/dashboard'])
-        }
-      }
-    )
-
-    this.adminService.userIsAuthenticated$.subscribe(
-      auth2 => {
-        if(auth2) this.router.navigate(['/dashboard'])
-      }
-    )
+    
   }
 
   searchedUser$: Observable<User> = of({} as User);
@@ -71,6 +59,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.loginForm.valueChanges.subscribe(({email, password}) => {
       if (email && password){
         this.searchedForm.next({email, password} as User);
