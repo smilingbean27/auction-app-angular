@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
    this.adminService.adminIsAuthenticated$.subscribe(
      auth => {
        if(auth){
-        this.router.navigateByUrl('admin/dashboard')
+        this.router.navigate(['admin/dashboard'])
         .then((success: boolean) => {
           if (success) this.users.admin.authenticated = auth;
         })
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
   signOut(){
     if (this.users.admin.authenticated){
       this.adminService.setAuthentication(false, 'admin');
-      this.router.navigateByUrl('/admin/sign-in');
+      this.router.navigate(['/admin/sign-in']);
       this.users.admin.authenticated = false;
     }
     if (this.users.user.authenticated){
