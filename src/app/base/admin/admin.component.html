@@ -1,39 +1,30 @@
 <div class="form_container">
-<h2> {{adminRoute ? 'Admin': 'User'}} Login Form </h2>
-<form [formGroup]="loginForm">
-<mat-form-field appearance="standard">
-    <label> Email </label>
-    <input matInput type="email" placeholder="Put your email here" formControlName="email" autocomplete="current-email" required >
-    <mat-error *ngIf="email.hasError('required')"> Forgot to type your Email? </mat-error>
-    <mat-hint *ngIf="email.hasError('pattern')"> Invalid Email format </mat-hint>
-</mat-form-field>
+    <h2> {{adminRoute ? 'Admin': 'User'}} Login Form </h2>
+    <form [formGroup]="loginForm">
+        <mat-form-field appearance="standard">
+            <label> Email </label>
+            <input matInput type="email" placeholder="Put your email here" formControlName="email" autocomplete="current-email" required >
+            <mat-error *ngIf="email.hasError('required')"> Forgot to type your Email? </mat-error>
+        </mat-form-field>
 
-<mat-form-field appearance="standard">
-    <label> Password </label>
-    <input matInput type="password" placeholder="Put a strong password"  formControlName="password" autocomplete="current-password"  required >
-    <mat-error *ngIf="password.hasError('required')"> You can't forget your password man! </mat-error>
-    
-    <mat-hint>
-        <span *ngIf="password.hasError('hasNumber')"> At least one number...  </span>
-        <span *ngIf="password.hasError('hasLowerCase')"> At least one lowercase character... </span>
-        <span *ngIf="password.hasError('hasCapitalCase')"> At least one uppercase character...  </span>
-        <span *ngIf="password.hasError('hasSpecialChar')"> At least one special character...  </span>
-        <span *ngIf="password.hasError('minlength') && !password.hasError('required')">Minimum length: {{minLength}}</span>
-        <span *ngIf="password.hasError('maxlength') && !password.hasError('required')">Maximum length: {{maxLength}}</span>
-    </mat-hint>   
-</mat-form-field>
+        <mat-form-field appearance="standard">
+            <label> Password </label>
+            <input matInput type="password" placeholder="Put a strong password"  formControlName="password" autocomplete="current-password"  required >
+            <mat-error *ngIf="password.hasError('required')"> You can't forget your password man! </mat-error>
+            
+        </mat-form-field>
 
-<div *ngIf="adminRoute; then UserLoginLink; else AdminLoginLink">
+        <div *ngIf="adminRoute; then UserLoginLink; else AdminLoginLink">
 
-</div>
-<ng-template #UserLoginLink>
-    <a href="/sign-in"> Are you a user?</a>
-</ng-template>
+        </div>
+        <ng-template #UserLoginLink>
+            <a href="/sign-in"> Are you a user?</a>
+        </ng-template>
 
-<ng-template #AdminLoginLink>
-    <a href="/admin/sign-in"> Are you an admin? </a>
-</ng-template>
-</form>
+        <ng-template #AdminLoginLink>
+            <a href="/admin/sign-in"> Are you an admin? </a>
+        </ng-template>
+    </form>
 </div>
 
 

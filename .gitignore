@@ -50,3 +50,4 @@ Thumbs.db
 .firebase/
 src/app/_services/IP_API_key.ts
 src/environments/environment.prod.ts
+firebase.json

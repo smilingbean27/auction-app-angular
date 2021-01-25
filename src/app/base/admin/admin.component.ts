@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { debounceTime, switchMap, distinct, distinctUntilChanged } from 'rxjs/operators';
 import { AdminDataService } from '../../_services/admin-data.service';
-import { CustomPasswordValidator } from '../../_validators/customPasswordValidator.directive';
 
 @Component({
   selector: 'app-admin',
@@ -14,15 +13,11 @@ import { CustomPasswordValidator } from '../../_validators/customPasswordValidat
 })
 export class AdminComponent implements OnInit {
 
+  constructor(private router: Router, private adminService: AdminDataService,
+              private route: ActivatedRoute) { }
+
   adminRoute = false;
-
-  constructor(private router: Router, private adminService: AdminDataService, private route: ActivatedRoute) { 
-    
-  }
-
   searchedUser$: Observable<User> = of({} as User);
-  minLength: number = 6;
-  maxLength: number = 12;
   verified: boolean = false;
 
   @Output() userVerifyEvent = new EventEmitter<boolean>();
@@ -31,22 +26,11 @@ export class AdminComponent implements OnInit {
 
   loginForm = new FormGroup({
     email: new FormControl('',
-      [
-        Validators.required,
-        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),
-        
-      ]
-      ),
+      [ Validators.required,]
+    ),
     password: new FormControl('', 
-      [
-        Validators.required,
-        Validators.minLength(this.minLength),
-        Validators.maxLength(this.maxLength),
-        CustomPasswordValidator(/\d/, {hasNumber: true}),
-        CustomPasswordValidator(/[A-Z]/, {hasCapitalCase: true}),
-        CustomPasswordValidator(/[a-z]/, {hasLowerCase: true}),
-        CustomPasswordValidator(/[!@#$%^&*(),.?":{}|<>]/,{hasSpecialChar: true})
-      ])
+      [ Validators.required,]
+    )
   }
   )
 
@@ -67,7 +51,7 @@ export class AdminComponent implements OnInit {
     })
 
     this.searchedUser$ = this.searchedForm.pipe(
-      debounceTime(2000),
+      debounceTime(3000),
       distinctUntilChanged(),
       switchMap(user => {
         return of(user);
@@ -75,12 +59,17 @@ export class AdminComponent implements OnInit {
     )
 
     this.searchedUser$.subscribe(user => {
-      
       this.adminService.verifyUser(user, this.adminRoute);
     });
 
     const path = this.route.snapshot.routeConfig?.path;
-    if (path == 'admin/sign-in') this.adminRoute = true
+    if (path === 'admin/sign-in') this.adminRoute = true;
+    else this.adminRoute = false;
+
+    const user = this.adminService.getUserFromStorage();
+    if (user && user.isAdmin) this.router.navigate(['admin/dashboard']);
+    else if(user && !user.isAdmin) this.router.navigate(['dashboard']);
+
   }
 
   

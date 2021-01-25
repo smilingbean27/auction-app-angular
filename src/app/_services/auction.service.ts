@@ -31,11 +31,12 @@ export class AuctionService {
   }
 
   getProductById(id: string | null): Observable<Product>{
+    console.log(id, typeof id);
     return this.http.get<Product>(`${baseUrl}/api/product/${id}`);
   }
 
   removeProduct(product: Product){
-    this.http.delete<void>(`${baseUrl}/api/product/${product.id}`, this.httpOptions)
+    this.http.delete<void>(`${baseUrl}/api/product/${product._id}`, this.httpOptions)
     .pipe(
       catchError(err=> {
         console.log(err);
@@ -46,7 +47,8 @@ export class AuctionService {
   }
 
   editProduct(product: Product){
-    this.http.put<Product>(`${baseUrl}/api/product/${product.id}`, product, this.httpOptions)
+    console.log(product._id)
+    this.http.put<Product>(`${baseUrl}/api/product/${product._id}`, product, this.httpOptions)
     .subscribe(product => console.log('Producted edited', product))
   }
 

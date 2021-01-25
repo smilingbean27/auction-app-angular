@@ -46,9 +46,9 @@ export class UserDashboardComponent implements OnInit {
       }
     )
 
-    const x = setInterval(()=> {
-      this.IsEntryAllowed()
-    }, 2000)
+    // const x = setInterval(()=> {
+    //   // this.isEntryAllowed()
+    // }, 2000)
   }
 
   ngOnInit(): void {
@@ -74,8 +74,8 @@ export class UserDashboardComponent implements OnInit {
     
       if (e.diff(s, 'seconds') > 0){
         this.filteredProducts = this.products.filter(product => {
-          const r = Moment.range(product.startDateTime, product.endDateTime);
-          const bool = (range.contains(moment(product.endDateTime)) || range.contains(moment(product.startDateTime)) || r.contains(range)) && this.IsAllowedIn(product.isInCountry);
+          const r = Moment.range(product.startDate, product.endDate);
+          const bool = (range.contains(moment(product.endDate)) || range.contains(moment(product.startDate)) || r.contains(range)) && this.isAllowedIn(product.country);
           return bool;
         })
       
@@ -85,18 +85,16 @@ export class UserDashboardComponent implements OnInit {
     }
   }
 
-  IsAllowedIn(allowedCountry: String){
+  isAllowedIn(allowedCountry: String){
     return this.country === allowedCountry
   }
 
-  IsEntryAllowed(){
-    this.products.forEach(product => {
-      const start = moment(product.startDateTime);
-      const end = moment(product.endDateTime);
+  isEntryAllowed(product: Product){
+      const start = moment(product.startDate);
+      const end = moment(product.endDate);
       const range = Moment.range(start, end);
 
-      product.entry = range.contains(moment()) && this.IsAllowedIn(product.isInCountry)
-    })
+      return range.contains(moment()) && this.isAllowedIn(product.country);
   }
 
   onCheck(event: any){ 

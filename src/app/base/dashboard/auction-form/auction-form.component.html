@@ -9,7 +9,7 @@
         <mat-form-field appearance="standard">
             <label> Link of Image </label>
             <input matInput type="text" formControlName="image" required >
-            <mat-error *ngIf="name.hasError('required')"> Put a picture as well.. </mat-error>
+            <mat-error *ngIf="image.hasError('required')"> Put a picture as well.. </mat-error>
         </mat-form-field>
         
         <mat-form-field appearance="standard">
@@ -20,19 +20,19 @@
 
         <mat-form-field appearance="standard">
             <label> Starting Time </label>
-            <input matInput type="datetime-local" formControlName="startDateTime" required >  
-            <mat-error *ngIf="startDateTime.hasError('required')"> Time period you want the auction to start on..? </mat-error>   
+            <input matInput type="datetime-local" formControlName="startDate" required >  
+            <mat-error *ngIf="startDate.hasError('required')"> Time period you want the auction to start on..? </mat-error>   
         </mat-form-field>
 
         <mat-form-field appearance="standard">
             <label> Ending Time </label>
-            <input matInput type="datetime-local" formControlName="endDateTime" required >  
-            <mat-error *ngIf="endDateTime.hasError('required')"> Time period you want the auction to end..? </mat-error>   
+            <input matInput type="datetime-local" formControlName="endDate" required >  
+            <mat-error *ngIf="endDate.hasError('required')"> Time period you want the auction to end..? </mat-error>   
         </mat-form-field>
 
         <mat-form-field appearance="standard">
             <label> Auction is for Country </label>
-            <mat-select formControlName="isInCountry">
+            <mat-select formControlName="country">
                 <mat-option *ngFor="let country of countries" [value]="country.key" >
                     {{country.value}}
                 </mat-option>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <a class="start" mat-raised-button [disabled]="!name.value || !image.value || !price.value || !startDateTime.value || !endDateTime.value || !isInCountry.value" (click)="submitForm()">
+        <a class="start" mat-raised-button [disabled]="!name.value || !image.value || !price.value || !startDate.value || !endDate.value || !country.value" (click)="submitForm()">
             Add to Auction 
         </a>
         

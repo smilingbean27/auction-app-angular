@@ -1,8 +1,17 @@
 <mat-toolbar color="primary">
-    <span class="logo"> Hit the hammer</span>
-    <!-- <ul class="navigation">
-        <li class="navigation_item"> <a href="/admin/auction/list" class="navigation_link"> Auction list </a> </li>
-    </ul> -->
-    <button *ngIf="users.user.authenticated || users.admin.authenticated" mat-raised-button color="accent" class="button_signout" (click)="signOut()"> Sign Out </button>
+    <a href="/" class="logo"> Hit the hammer</a>
+    
+    <div class="button_parent">
+        <div  *ngIf="isAuthenticated; then exitButton; else enterButton"> </div>
+    </div>
+    
+    <ng-template #exitButton>
+        <button  mat-raised-button color="accent" class="button_primary" (click)="signOut()"> Sign Out </button>
+    </ng-template>
+    <ng-template #enterButton>
+        <a href="/sign-up"  mat-raised-button color="accent" class="button_primary"> Sign Up </a>
+        <a href="/sign-in"  mat-raised-button color="accent" class="button_primary"> Sign In </a>  
+    </ng-template>
+    
 </mat-toolbar>
 

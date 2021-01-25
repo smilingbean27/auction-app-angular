@@ -32,7 +32,6 @@ import { EditProductComponent } from './base/product-detail/edit-product/edit-pr
 import { UserDashboardComponent } from './base/user-dashboard/user-dashboard.component';
 import { IpService } from './_services/ip.service';
 import { SignUpComponent } from './base/sign-up/sign-up.component';
-import { UserLoginGuard } from './_services/user-login.guard';
 
 @NgModule({
   declarations: [
@@ -69,7 +68,7 @@ import { UserLoginGuard } from './_services/user-login.guard';
     MatNativeDateModule,
     MatCheckboxModule
   ],
-  providers: [AdminDataService, LoginGuard, IpService, UserLoginGuard ],
+  providers: [AdminDataService, LoginGuard, IpService],
   bootstrap: [AppComponent],
 
 })

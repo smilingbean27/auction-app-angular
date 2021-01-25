@@ -8,11 +8,11 @@
     </div>
 
     <div>
-        <app-timer [endDate]= "product.endDateTime" [startDate]="product.startDateTime"></app-timer>
+        <app-timer [endDate]= "product.endDate" [startDate]="product.startDate"></app-timer>
     </div>
 
     <div class="item_view-details">
-        <a routerLink="/admin/auction/product/{{product.id}}" routerLinkActive="active"> View Details >>> </a>
+        <a routerLink="/admin/auction/product/{{product._id}}" routerLinkActive="active"> View Details >>> </a>
     </div>
     
 </div>

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomPasswordValidator } from 'src/app/_validators/customPasswordValidator.directive';
+import { AdminDataService } from 'src/app/_services/admin-data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,12 +13,21 @@ import { CustomPasswordValidator } from 'src/app/_validators/customPasswordValid
 export class SignUpComponent implements OnInit {
   minLength = 6;
   maxLength = 12;
-  constructor() { }
+  isSignUpRoute = false;
+
+  constructor(private adminService: AdminDataService, private router: Router) { }
 
   ngOnInit(): void {
+    const user = this.adminService.getUserFromStorage();
+    console.log(user)
+    if (user && user.isAdmin) this.router.navigate(['admin/dashboard']);
+    else if(user && !user.isAdmin) this.router.navigate(['dashboard']);
   }
 
   signUpForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
     email: new FormControl('', [
       Validators.required,
       Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
@@ -30,7 +41,7 @@ export class SignUpComponent implements OnInit {
       CustomPasswordValidator(/[a-z]/, {hasLowercaseLetter: true}),
       CustomPasswordValidator(/[!@#$%^&*(),.?":{}|<>]/, {hasSpecialCharacter: true})
     ]),
-    ownership: new FormControl('user', [
+    isAdmin: new FormControl('false', [
       Validators.required
     ])
   })
@@ -43,12 +54,15 @@ export class SignUpComponent implements OnInit {
     return this.signUpForm.get('password') as FormControl;
   }
 
-  get ownership(){
-    return this.signUpForm.get('ownership') as FormControl;
+  get isAdmin(){
+    return this.signUpForm.get('isAdmin') as FormControl;
   }
 
   submitForm(){
-    console.log(this.signUpForm.value)
+    const user = this.signUpForm.value;
+    user.isAdmin = user.isAdmin === 'true'? true: false;
+    console.log(user)
+    this.adminService.addUser(this.signUpForm.value);
   }
 
 }

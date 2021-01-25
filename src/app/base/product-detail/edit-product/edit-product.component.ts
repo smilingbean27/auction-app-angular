@@ -17,6 +17,7 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    console.log(id)
     this.auctionService.getProductById(id)
     .subscribe(product =>{ 
       this.product = product ? product : {} as Product  
@@ -37,13 +38,13 @@ export class EditProductComponent implements OnInit {
     price: new FormControl('', [
       Validators.required,
     ]),
-    startDateTime: new FormControl('',[
+    startDate: new FormControl('',[
       Validators.required
     ]),
-    endDateTime: new FormControl('', [
+    endDate: new FormControl('', [
       Validators.required
     ]),
-    isInCountry: new FormControl(''),
+    country: new FormControl(''),
     features: new FormArray([
       new FormControl(''),
       new FormControl(''),
@@ -76,15 +77,15 @@ export class EditProductComponent implements OnInit {
       name: product.name,
       price: product.price,
       image: product.image,
-      startDateTime: product.startDateTime,
-      endDateTime: product.endDateTime,
-      isInCountry: product.isInCountry,
+      startDate: product.startDate,
+      endDate: product.endDate,
+      country: product.country,
       features: [...this.product.features],
     })
   }
 
   saveForm(){
-    const product = {...this.auctionForm.value, id: this.product.id}
+    const product = {...this.auctionForm.value, _id: this.product._id}
     console.log(product);
     this.auctionService.editProduct(product);
     this.router.navigate(['admin/auction/list']);

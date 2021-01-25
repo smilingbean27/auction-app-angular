@@ -27,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   edit(){
-    this.router.navigate([`admin/auction/product/${this.product.id}/edit`])
+    this.router.navigate([`admin/auction/product/${this.product._id}/edit`])
   }
 
 }

@@ -1,12 +1,10 @@
 export interface Product {
-    id: number;
+    _id: String;
     name: string;
     image: string;
     price: number;
     features: Array<string>;
-    startDateTime: Date;
-    isInCountry: string;
-    endDateTime: Date;
-    timePeriod: number;
-    entry: boolean;
+    startDate: Date;
+    endDate: Date;
+    country: String;
 }

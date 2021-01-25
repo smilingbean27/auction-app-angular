@@ -21,13 +21,13 @@ export class AuctionFormComponent implements OnInit {
     price: new FormControl('', [
       Validators.required,
     ]),
-    startDateTime: new FormControl('', [
+    startDate: new FormControl('', [
       Validators.required,
     ]),
-    endDateTime: new FormControl('', [
+    endDate: new FormControl('', [
       Validators.required,
     ]),
-    isInCountry: new FormControl(''),
+    country: new FormControl(''),
     features: new FormArray([
       new FormControl('')
     ])
@@ -60,16 +60,16 @@ export class AuctionFormComponent implements OnInit {
     return this.auctionForm.get('price') as FormControl;
   }
 
-  get startDateTime(){
-    return this.auctionForm.get('startDateTime') as FormControl;
+  get startDate(){
+    return this.auctionForm.get('startDate') as FormControl;
   }
 
-  get endDateTime(){
-    return this.auctionForm.get('endDateTime') as FormControl;
+  get endDate(){
+    return this.auctionForm.get('endDate') as FormControl;
   }
 
-  get isInCountry(){
-    return this.auctionForm.get('isInCountry') as FormControl;
+  get country(){
+    return this.auctionForm.get('country') as FormControl;
   }
 
   get features(){

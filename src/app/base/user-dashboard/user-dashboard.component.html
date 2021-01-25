@@ -29,12 +29,11 @@
                     <mat-card-content>
                         <ul class="card_list">
                             <li class="card_list-item">{{product.price}}$</li>
-                            <li class="card_list-item">{{product.id}}</li>
                             <li class="card_list-item">
-                                <app-timer [endDate]="product.endDateTime" [startDate]="product.startDateTime"></app-timer>
+                                <app-timer [endDate]="product.endDate" [startDate]="product.startDate"></app-timer>
                             </li>
 
-                            <li class="card_list-item red" *ngIf="product.isInCountry !== country">
+                            <li class="card_list-item red" *ngIf="product.country !== country">
                                 Blocked in Your country
                             </li>
                             
@@ -42,7 +41,7 @@
                     </mat-card-content>
     
                     <mat-card-footer>
-                        <button mat-raised-button color="basic" [disabled]="!product.entry" > Enter </button>
+                        <button mat-raised-button color="basic" [disabled]="!isEntryAllowed(product)" > Enter </button>
                     </mat-card-footer>
                 </mat-card>
             </div>

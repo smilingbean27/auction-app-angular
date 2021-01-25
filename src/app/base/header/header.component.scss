@@ -1,12 +1,22 @@
 .logo{
     text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
-.button_signout{
-    position: absolute;
-    top: 1rem;
-    right: 2rem;
+.button_parent{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+
 }
+
+.button_parent a {
+    margin-right: 1rem;
+}
+
+
 
 .navigation{
     margin: 0 3rem;

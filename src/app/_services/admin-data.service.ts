@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { User } from '../base/user';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -14,30 +14,39 @@ const {baseUrl} = environment;
 
 export class AdminDataService {
 
-  adminIsAuthenticated$ = new Subject<boolean>();
-  userIsAuthenticated$ = new Subject<boolean>();
+  userData$ = new Subject<String>();
   
   constructor(private http: HttpClient){
-    this.adminIsAuthenticated$.pipe(
-      startWith(false)
+    this.userData$.pipe(
+      startWith('')
     )
-    this.userIsAuthenticated$.pipe(
-      startWith(false)
-    )
-    // localStorage.setItem('authenticated', String(false));
-    // localStorage.setItem('userAuthe')
-    // this.adminIsAuthenticated$.subscribe(val =>{
-    //   localStorage.setItem('authenticated', String(val))
-    // } );
-    // this.userIsAuthenticated$.subscribe(val => {
-    //   localStorage.setItem('userAuthenticated', String(val));
-    // })
   }
 
-  setAuthentication(val: boolean, user: String){
-    if (user === 'admin') this.adminIsAuthenticated$.next(val);
-    else if (user === 'user') this.userIsAuthenticated$.next(val);
+  setUserInStorage(item: string): void{
+    console.log(item);
+    localStorage.setItem('user', item);
+    this.userData$.next(item);
+    
   }
+
+  getUserFromStorage(): User | null{
+    const val = localStorage.getItem('user');
+    if (val) {
+      return JSON.parse(val);
+    }else{
+      return null;
+    }
+  }
+
+  checkAuthentication(): boolean{
+    const user = this.getUserFromStorage();
+    return user?.name ? true: false; 
+  }
+
+  // setAuthentication(val: boolean, user: String){
+  //   if (user === 'admin') this.adminIsAuthenticated$.next(val);
+  //   else if (user === 'user') this.userIsAuthenticated$.next(val);
+  // }
 
   
   httpOptions = {
@@ -46,11 +55,20 @@ export class AdminDataService {
     })
   }
 
-  verifyUser(admin: User, adminRoute: boolean): void {
-    this.http.post<any>(`${baseUrl}/api/authenticate`, {...admin, adminRoute})
-    .subscribe(({user, info}) =>{
-      if (user && user.isAdmin) this.adminIsAuthenticated$.next(true)
-      if (user && !user.isAdmin) this.userIsAuthenticated$.next(true)
+  addUser(user: User ):void{
+    this.http.post<User | null>(`${baseUrl}/api/user/add`, user, this.httpOptions)
+    .subscribe(data => {
+      console.log(data);
+      if(data) this.setUserInStorage(JSON.stringify(data));
+    })
+  }
+
+  verifyUser(user: User, adminRoute: boolean): void {
+    this.http.post<any>(`${baseUrl}/api/user/authenticate`, {...user, adminRoute})
+    .subscribe(({data, info}) =>{
+      if (data) this.setUserInStorage(JSON.stringify(data));
+
+      if (info) console.log(info);
     } ); 
   }
 
